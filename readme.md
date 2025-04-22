@@ -1,0 +1,1 @@
+to run, just run ght visualize file with "streamlit run visualize.py". Make sure to install any requirements prompted and the ones in the requirements.txt
