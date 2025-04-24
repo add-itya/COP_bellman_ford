@@ -1,4 +1,3 @@
-
 """
 has 3 predefined graphs, measures runtime, peak memory, and prints results
 """
@@ -13,26 +12,46 @@ import bellman_ford_mem_opt as bf_mem
 TestGraph = tuple[int, list[tuple[int,int,int]], int]
 
 graphs: list[TestGraph] = [
-    # 5 vertices
     (5, [
-        (0,1,6),(0,2,7),
-        (1,2,8),(1,3,5),(1,4,-4),
-        (2,3,-3),(2,4,9),
-        (3,1,-2),(4,3,7),(4,0,2)
+        (0, 1, 5),
+        (1, 2, 1),
+        (1, 3, 2),
+        (2, 4, 1),
+        (4, 3, -1)
     ], 0),
-
-    # small graph with one negative edge
     (4, [
-        (0,1,1),(1,2,-1),(2,3,2),(0,3,4)
+        (0, 1, 4),
+        (1, 2, -2),
+        (2, 3, 5),
+        (3, 1, -1)
+    ], 0),(3, [
+        (0, 1, 2),
+        (1, 2, 4),
+        (0, 2, 6)    
     ], 0),
 
-    # six‑node acyclic-ish graph
     (6, [
-        (0,1,5),(0,2,3),
-        (1,3,6),(1,2,2),
-        (2,4,4),(2,5,2),(2,3,7),
-        (3,4,-1),
-        (4,5,-2)
+        (0, 1, 7), (1, 0, 7),
+        (0, 2, 9), (2, 0, 9),
+        (0, 5,14), (5, 0,14),
+        (1, 2,10), (2, 1,10),
+        (1, 3,15), (3, 1,15),
+        (2, 3,11), (3, 2,11),
+        (2, 5, 2), (5, 2, 2),
+        (3, 4, 6), (4, 3, 6),
+        (4, 5, 9), (5, 4, 9)
+    ], 0),
+
+    (7, [
+        (0, 1, 3),
+        (0, 2, 2),
+        (2, 1, 1),
+        (1, 3, 4),
+        (2, 3, 8),
+        (3, 4, 2),
+        (4, 5, 3),
+        (5, 6, 1),
+        (4, 6, 6)
     ], 0)
 ]
 
@@ -54,10 +73,10 @@ def run_algo(name: str, func, n, edges, src):
 def main():
     print("\n===== Bellman–Ford shoot‑out =====\n")
     for g_idx, (n, edges, src) in enumerate(graphs, start=1):
-        print(f"Graph {g_idx}: vertices={n}, edges={len(edges)}, source={src}")
+        print(f"Graph {g_idx}: vertices={n}, edges={len(edges)}, source={src}")
         for name, func in algos:
             elapsed, mem_kib, dist = run_algo(name, func, n, edges, src)
-            print(f"  {name:<12}  time: {elapsed*1e3:8.3f} ms   peak mem: {mem_kib:8.1f} KiB   dists: {dist}")
+            print(f"  {name:<12}  time: {elapsed*1e3:8.3f} ms   peak mem: {mem_kib:8.1f} KiB   dists: {dist}")
         print()
     print("Done.")
 

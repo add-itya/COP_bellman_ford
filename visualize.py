@@ -39,20 +39,28 @@ def draw_graph(G: nx.DiGraph, distances: List[float] = None, active_edges: List[
     edge_labels = nx.get_edge_attributes(G, 'weight')
     nx.draw_networkx_edge_labels(G, pos, edge_labels, font_size=10)
     
+    # Initialize distances array if None
+    if distances is None:
+        distances = [float('inf')] * G.number_of_nodes()
+    elif len(distances) < G.number_of_nodes():
+        # Pad distances with inf if too short
+        distances = distances + [float('inf')] * (G.number_of_nodes() - len(distances))
+    
     # Draw nodes with colors based on state
     node_colors = []
     node_sizes = []
+    
     for i in G.nodes():
         if active_nodes and i in active_nodes:
-            if distances and distances[i] == 0:  # Source node
+            if distances[i] == 0:  # Source node
                 node_colors.append('lightgreen')
             else:  # Currently being processed
                 node_colors.append('orange')
             node_sizes.append(600)  # Larger size for active nodes
         else:
-            if distances and distances[i] == float('inf'):
+            if distances[i] == float('inf'):
                 node_colors.append('lightblue')
-            elif distances and distances[i] == 0:
+            elif distances[i] == 0:
                 node_colors.append('lightgreen')
             else:
                 node_colors.append('lightyellow')
